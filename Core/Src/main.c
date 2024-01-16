@@ -114,7 +114,7 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP1);
   HAL_UART_Transmit(&huart1, (uint8_t *)"ZZX", 3, 0xffff);
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)RxBuffer,1);
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)RxBuffer,2);
   /* USER CODE END 2 */
 
   /* Init scheduler */
