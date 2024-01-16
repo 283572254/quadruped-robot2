@@ -1,0 +1,11 @@
+*** Using Compiler 'V5.05 update 1 (build 106)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'testc8t6'
+compiling main.c...
+../Core/Src/main.c(89): warning:  #177-D: variable "ZZX" was declared but never referenced
+  		uint8_t  ZZX[3] = {100};
+../Core/Src/main.c: 1 warning, 0 errors
+linking...
+Program Size: Code=15468 RO-data=340 RW-data=1232 ZI-data=8008  
+FromELF: creating hex file...
+"testc8t6\testc8t6.axf" - 0 Error(s), 1 Warning(s).
+Build Time Elapsed:  00:00:01

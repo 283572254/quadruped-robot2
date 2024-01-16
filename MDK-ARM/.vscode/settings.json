@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "pwm.h": "c",
+        "tim.h": "c",
+        "i2c.h": "c",
+        "oled.h": "c",
+        "codetab.h": "c",
+        "bmp.h": "c",
+        "usart.h": "c",
+        "string.h": "c"
+    }
+}
