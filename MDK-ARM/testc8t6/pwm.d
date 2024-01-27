@@ -31,3 +31,14 @@ testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Drivers/STM32F1xx_HAL_Driver/Inc/s
 testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 testc8t6\pwm.o: ../Core/Inc/tim.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+testc8t6\pwm.o: ../Core/Inc/FreeRTOSConfig.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+testc8t6\pwm.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h

@@ -29,6 +29,8 @@
 /* USER CODE BEGIN Includes */
 #include "pwm.h"
 #include "OLED.h"
+#include <string.h>
+#include "semphr.h"
 
 /* USER CODE END Includes */
 
@@ -49,13 +51,18 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
+
 extern unsigned char BMP1[];
-#include <string.h>
- 
-#define RXBUFFERSIZE  256     //最大接收字节数
+extern unsigned char BMP2[];
+extern unsigned char BMP3[];
 char RxBuffer[RXBUFFERSIZE];   //接收数据
 uint8_t aRxBuffer;			//接收中断缓冲
 uint8_t Uart1_Rx_Cnt = 0;		//接收缓冲计数
+uint8_t g_instruction;
+
+extern SemaphoreHandle_t g_xConSemaphore; 
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,7 +93,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-		uint8_t  ZZX[3] = {100};
+		
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -112,9 +120,12 @@ int main(void)
   OLED_Fill(0x00);
   HAL_Delay(2000);
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-  OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP1);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+  OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP2);
   HAL_UART_Transmit(&huart1, (uint8_t *)"ZZX", 3, 0xffff);
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)RxBuffer,2);
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)RxBuffer,1);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -186,13 +197,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_UART_TxCpltCallback could be implemented in the user file
    */
- 
+ /*获取信号量*/ 
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+  xSemaphoreTakeFromISR(g_xConSemaphore,&xHigherPriorityTaskWoken);
 	if(Uart1_Rx_Cnt >= 255)  //溢出判断
 	{
 		Uart1_Rx_Cnt = 0;
 		memset(RxBuffer,0x00,sizeof(RxBuffer));
 		HAL_UART_Transmit(&huart1, (uint8_t *)"数据溢出", 10,0xFFFF); 	
-        
+    /*释放信号量*/     
 	}
 	else
 	{
@@ -202,8 +215,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		{
 			HAL_UART_Transmit(&huart1, (uint8_t *)&RxBuffer, Uart1_Rx_Cnt,0xFFFF); //将收到的信息发送出去
             while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);//检测UART发送结束
+            g_instruction = RxBuffer[1];
 			Uart1_Rx_Cnt = 0;
 			memset(RxBuffer,0x00,sizeof(RxBuffer)); //清空数组
+      /*释放信号量*/  
+      xSemaphoreGiveFromISR(g_xConSemaphore,&xHigherPriorityTaskWoken);
 		}
 	}
 	

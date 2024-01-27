@@ -59,6 +59,7 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+#define RXBUFFERSIZE  256     //最大接收字节数
 
 /* USER CODE END Private defines */
 

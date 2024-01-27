@@ -7,6 +7,9 @@
         "codetab.h": "c",
         "bmp.h": "c",
         "usart.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "task.h": "c",
+        "freertos.h": "c",
+        "main.h": "c"
     }
 }

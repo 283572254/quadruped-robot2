@@ -28,6 +28,8 @@
 /* USER CODE BEGIN Includes */
 #include "tim.h"
 #include "pwm.h"
+#include "OLED.h"
+#include "semphr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +49,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+BaseType_t gOledtaskHandle; //oled_task
+BaseType_t gPwmtaskHandle;  //move_task
 
+SemaphoreHandle_t g_xConSemaphore;//control semaphore
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -73,7 +78,8 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+  TaskHandle_t xOled_contral;
+  TaskHandle_t xPwm_contral;
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -82,6 +88,8 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
+  g_xConSemaphore = xSemaphoreCreateCounting(1,1);                       //creat semaphore
+
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -98,6 +106,10 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  /* 创建显示任务, oled */
+  gOledtaskHandle = xTaskCreate(oled_contral,"oled_contral",128,NULL,osPriorityAboveNormal,&xOled_contral);
+  /* 创建运动任务, oled */
+  gPwmtaskHandle = xTaskCreate(pwm_contral,"pwm_contral",128,NULL,osPriorityAboveNormal,&xPwm_contral);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */

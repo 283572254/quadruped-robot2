@@ -42,3 +42,6 @@ testc8t6\freertos.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeR
 testc8t6\freertos.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 testc8t6\freertos.o: ../Core/Inc/tim.h
 testc8t6\freertos.o: .\drive\pwm.h
+testc8t6\freertos.o: .\drive\OLED.h
+testc8t6\freertos.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+testc8t6\freertos.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h

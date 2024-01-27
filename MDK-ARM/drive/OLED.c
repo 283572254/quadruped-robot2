@@ -2,6 +2,65 @@
 #include "i2c.h"
 #include"codetab.h"
 #include "bmp.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
+enum e_instruction_oled {sway = 65,stretch_wave,sleep,up,left,stand,right,down};
+extern uint8_t g_instruction;
+static uint8_t g_instruction_last;
+extern char RxBuffer[RXBUFFERSIZE];   //接收数据
+
+extern SemaphoreHandle_t g_xConSemaphore; 
+void oled_contral(void)
+{
+	
+	while (1)
+	{
+		/*获取信号量*/
+		if(g_instruction_last != g_instruction)
+		{
+				xSemaphoreTake(g_xConSemaphore,portMAX_DELAY);
+				switch (g_instruction)
+				{
+					case sway:
+						OLED_Fill(0xFF);
+						break;
+					case stretch_wave:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP5);
+						break;
+					case sleep:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP6);
+						break;
+					case up:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP2);
+						break;
+					case left:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP3);
+						break;	
+					case stand:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP1);
+						break;
+					case right:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP4);
+						break;
+					case down:
+						OLED_ShowBMP(0,0,128,8,(unsigned char *)BMP5);
+						break;				
+					default:
+						break;
+				}
+			g_instruction_last = g_instruction;	
+				/*释放信号量*/
+			xSemaphoreGive(g_xConSemaphore);
+			vTaskDelay(10);
+		}
+
+		
+	}
+		
+
+}
+
 void WriteCmd(unsigned char I2C_Command)
 {
 		HAL_I2C_Mem_Write(&hi2c1,OLED_ADDRESS,0x00,1,&I2C_Command,1,1000);
@@ -198,7 +257,7 @@ void OLED_ShowBMP(unsigned char x0,unsigned char y0,unsigned char x1,unsigned ch
 
 				for(x=x0;x<x1;x++)
 				{
-						WriteData(BMP1[j++]);
+						WriteData(BMP[j++]);
 				}
 		}
 }

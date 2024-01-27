@@ -45,3 +45,5 @@ testc8t6\main.o: ../Core/Inc/gpio.h
 testc8t6\main.o: .\drive\pwm.h
 testc8t6\main.o: .\drive\OLED.h
 testc8t6\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+testc8t6\main.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+testc8t6\main.o: D:/LST/STM32Cube_FW_F1_V1.8.4/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
